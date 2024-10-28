@@ -6,7 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','gallery'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -14,7 +14,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '',
+            'cookieValidationKey' => 'gallery',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -41,16 +41,34 @@ $config = [
                 ],
             ],
         ],
+
         'db' => $db,
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+        
+        'gallery' => [
+            'class' => 'siripravi\gallery\components\ImgManager',
+            'fkName' => 'fk_id',
+            'imgTable' => '{{%image}}',
+            'thumbVer'  => 'small',
+            'imagePath' => 'uploads',
+            'versions' => [
+                'small' => ['width' => 72, 'height' => 72],
+                'medium' => ['width' => 200, 'height' => 150],
+                'large' => ['width' => 274, 'height' => 248],
+            ],
+            /*'versions2' => [
+                'small' => ['width' => 72, 'height' => 72],
+                'medium' => ['width' => 200, 'height' => 150],
+                'large' => ['width' => 1920, 'height' => 566],
+            ],*/
     ],
+],
     'params' => $params,
 ];
 
@@ -70,5 +88,8 @@ if (YII_ENV_DEV) {
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
-
+$config['modules']['gallery'] = [
+            'class' => 'siripravi\gallery\Module'
+];
+    
 return $config;

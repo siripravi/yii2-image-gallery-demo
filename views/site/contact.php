@@ -7,12 +7,14 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 use yii\captcha\Captcha;
+use siripravi\gallery\widgets\ImageWidget;
 
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-contact">
     <h1><?= Html::encode($this->title) ?></h1>
+    <?= ImageWidget::widget(['multiple'=>false]) ?>
 
     <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
 
